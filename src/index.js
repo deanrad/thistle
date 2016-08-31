@@ -1,4 +1,5 @@
-import { bindAll, functions } from 'lodash'
+import bindAll from 'lodash.bindall'
+import functions from 'lodash.functions'
 
 export const thistle = (fn) => {
   return function (...args) {

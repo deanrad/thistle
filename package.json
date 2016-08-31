@@ -1,7 +1,7 @@
 {
   "name": "@deanius/thistle",
   "author": "Dean Radcliffe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Thistle: (t͟hisˌəl) Touch only JS' good parts by ridding yourself of this.",
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "babel-runtime": "6.x.x",
-    "lodash": "^4.15.0"
+    "lodash.functions": "^4.3.0",
+    "lodash.bindall": "^4.4.0"
   }
 }
