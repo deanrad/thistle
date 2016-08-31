@@ -1,41 +1,77 @@
-# npm-base
+# thistle
 
-A base package for creating NPM packages with ES2015.
+Thistle: (t͟hisˌəl) Utilize only JS' good parts by ridding yourself of _this_.
 
----
+# How to use
+`npm install -S thistle`
 
-Writing in ES2015 is an amazing experience. Setting up babel and the development environment in a kind of a pain.
+Then substitute:
 
-If you want to write a **NPM module** in ES2015 and publish to NPM with backward compatibility, this is the **easiest** way.
+```
+thistle(({field}, arg) => console.log('this.field was', field))
+```
 
-## Basic Usage
+For: 
 
-* Simply clone [this](https://github.com/kadirahq/npm-base) project.
-* Change the `package.json` as you want.
-* `lib/index.js` in your entry point.
-* Then publish to npm via `npm publish`.
+```
+function (arg) { console.log('this.field was', this.field) }
+```
 
-## Linting
+# Why?
 
-* ESLINT support is added to the project.
-* It's configured for ES2015 and inherited configurations from [graphql/graphql-js](https://github.com/graphql/graphql-js).
-* Use `npm run lint` to lint your code and `npm run lintfix` to fix common issues.
+* Remove **every** reference to `this` in your code-base if you want
+* Yet enjoy the same run-time behavior
+* Refactoring/moving code becomes much easier
+* Easy to see which parts of the context are used within the function
+* Use ES6 arrow functions with impunity
+* Use simple function calls - `this.dance()` becomes simply `dance()` 
 
-## Testing
+# Specification
 
-* You can write test under `__test__` directory anywhere inside `lib` including sub-directories.
-* Then run `npm test` to test your code. (It'll lint your code as well).
-* You can also run `npm run testonly` to run tests without linting.
+```js
+describe('thistle(fn)', () => {
+  // Simple fields on this should be destructurable
+  let fieldsFn = ({ctx1}, arg1) => {
+    return `${ctx1}:${arg1}`
+  } 
+  let fieldsContext = {
+    ctx1: 'ctx1Val',
+    ctx2: 'ctx2Val'
+  }
 
-## ES2015 Setup
+  // Methods of the context object should be bound to it 
+  // so you can invoke them stand-alone (meth will work correctly)
+  let mixedContext = {
+    ctx1: 'ctx1Val',
+    meth: function(){ return 'meth:' + this.ctx1}
+  }
+  let mixedFn = ({ctx1, meth}, arg1) => {
+    return [ctx1, meth(), arg1].join('/')
+  }
 
-* ES2015 support is added with babel6.
-* After you publish your project to NPM, it can be run on older node versions and browsers without the support of Babel.
-* This project uses ES2015 and some of the upcoming features like `async await`.
-* You can change them with adding and removing [presets](http://jamesknelson.com/the-six-things-you-need-to-know-about-babel-6/).
-* All the polyfills you use are taken from the local `babel-runtime` package. So, this package won't add any global polyfills and pollute the global namespace.
+  // Now test it
+  it('should return a function, for fun and profit', () => {
+    const result = thistle(fieldsFn)
+    expect(result).to.be.a.function
+  })
 
-## Kudos
+  it('which prepends `this` as its first argument, for fun and profit', () => {
+    const result = thistle(fieldsFn)
+    const retVal = result.call(fieldsContext, 'arg1Val')
+    expect(retVal).to.equal('ctx1Val:arg1Val')
+  })
 
-* Babel6 and the team behind it.
-* Facebook's [graphql-js](https://github.com/graphql/graphql-js) authors for ESLint configurations and for the directory structure.
+  it('and binds methods of `this` to itself, for fun and profit', () => {
+    const result = thistle(mixedFn)
+    const retVal = result.call(mixedContext, 'arg1Val')
+    expect(retVal).to.equal('ctx1Val/meth:ctx1Val/arg1Val')
+  })
+})
+```
+
+# Thanks
+
+- Douglas Crockford
+- ES6 for finally having cool language features
+- MC Hammer (who also advised us not to touch this)
+- Grateful Dead (for Ripple)
