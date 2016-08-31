@@ -8,6 +8,7 @@ Thistle: (t͟hisˌəl) Utilize only JS' good parts by ridding yourself of _this_
 Then substitute:
 
 ```
+// sane, lexical scoping
 thistle(({ready, error}, arg) => {
   if (ready()) {
     return arg
@@ -20,6 +21,7 @@ thistle(({ready, error}, arg) => {
 For: 
 
 ```
+// references to `this` peppered throughout, easily misinterpreted
 function (arg) {
   if (this.ready()) {
     return arg
