@@ -191,7 +191,7 @@
     "quotes": [2, "single"],
     "radix": 2,
     "require-yield": 2,
-    "semi": [2, "always"],
+    "semi": [2, "never"],
     "semi-spacing": [2, {"before": false, "after": true}],
     "sort-vars": 0,
     "space-after-keywords": [2, "always"],
