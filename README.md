@@ -8,13 +8,25 @@ Thistle: (t͟hisˌəl) Utilize only JS' good parts by ridding yourself of _this_
 Then substitute:
 
 ```
-thistle(({field}, arg) => console.log('this.field was', field))
+thistle(({ready, error}, arg) => {
+  if (ready()) {
+    return arg
+  } else {
+    error(arg)
+  }
+})
 ```
 
 For: 
 
 ```
-function (arg) { console.log('this.field was', this.field) }
+function (arg) {
+  if (this.ready()) {
+    return arg
+  } else {
+    this.error(arg)
+  }
+})
 ```
 
 # Why?
