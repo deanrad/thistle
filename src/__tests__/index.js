@@ -39,4 +39,16 @@ describe('thistle(fn)', () => {
     const retVal = result.call(mixedContext, 'arg1Val')
     expect(retVal).to.equal('ctx1Val/meth:ctx1Val/arg1Val')
   })
+
+  it('while still allowing you to set properties upon it', () => {
+    const contextObj = {ctx1: 'ctx1Val'}
+    const haterade = 'I set properties on my context object, cuz Im sick'
+    const result = thistle((context) => { 
+      context.newProp = haterade
+    })
+
+    const retVal = result.call(contextObj)
+
+    expect(contextObj).to.have.property('newProp', haterade)
+  })
 })
