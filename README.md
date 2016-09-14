@@ -1,8 +1,10 @@
-# thistle
-
+# thistle [![npm version](https://badge.fury.io/js/%40deanius%2Fthistle.svg)](https://badge.fury.io/js/%40deanius%2Fthistle) ![ES 2015](https://img.shields.io/badge/ES-2015-brightgreen.svg) ![twitter link](https://img.shields.io/badge/twitter-@deaniusaur-55acee.svg)
 Thistle: (t͟hisˌəl) Utilize only JS' good parts by ridding yourself of _this_.
 
+
+
 # How to use
+
 `npm install -S @deanius/thistle`
 
 Then substitute:
