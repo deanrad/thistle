@@ -17,7 +17,7 @@ describe('thistle(fn)', () => {
   // so you can invoke them stand-alone (meth will work correctly)
   let mixedContext = {
     ctx1: 'ctx1Val',
-    meth: function(){ return 'meth:' + this.ctx1}
+    meth: function () { return 'meth:' + this.ctx1}
   }
 
   let mixedFn = ({ctx1, meth}, arg1) => {
@@ -49,7 +49,7 @@ describe('thistle(fn)', () => {
       context.newProp = haterade
     })
 
-    const retVal = result.call(contextObj)
+    result.call(contextObj)
 
     expect(contextObj).to.have.property('newProp', haterade)
   })
